@@ -28,7 +28,17 @@ public class Environment {
      */
     public Value resolveVar(String varName) {
         // YOUR CODE HERE
-        return null;
+    	if(this.env.get(varName) != null) {
+    		return this.env.get(varName);
+    	}
+    	else {
+    		if(this.outerEnv != null) {
+    			return this.outerEnv.resolveVar(varName);
+    		}
+    		else {
+    			return null;
+    		}
+    	}
     }
 
     /**
@@ -38,6 +48,14 @@ public class Environment {
      */
     public void updateVar(String key, Value v) {
         // YOUR CODE HERE
+    	if(this.env.get(key) != null) {
+    		this.env.replace(key, v);
+    	}
+    	else {
+    		if(this.outerEnv != null) {
+    			this.outerEnv.updateVar(key, v);
+    		}
+    	}
     }
 
     /**
@@ -46,6 +64,11 @@ public class Environment {
      * a RuntimeException is thrown.
      */
     public void createVar(String key, Value v) {
-        // YOUR CODE HERE
+        if(this.env.get(key) != null) {
+        	this.env.put(key, v);
+        }
+        else {
+        	throw new RuntimeException();
+        }
     }
 }
