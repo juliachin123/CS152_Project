@@ -94,8 +94,11 @@ class IfExpr implements Expression {
         if(new BoolVal(true).equals(cond.evaluate(env))) {
         	return thn.evaluate(env);
         }
-        else {
+        else if(new BoolVal(false).equals(cond.evaluate(env))){
         	return els.evaluate(env);
+        }
+        else {
+        	return (Value) new Exception();
         }
     }
 }
