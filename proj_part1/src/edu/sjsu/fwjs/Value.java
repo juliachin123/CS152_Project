@@ -1,5 +1,6 @@
 package edu.sjsu.fwjs;
 
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -91,7 +92,14 @@ class ClosureVal implements Value {
      * be bound to its matching argument and added to the new local environment.
      */
     public Value apply(List<Value> argVals) {
-        // YOUR CODE HERE
-        return null;
+        Environment env = new Environment(outerEnv); 
+        
+        Iterator<String> iter1 = params.iterator();
+        Iterator<Value> iter2 = argVals.iterator();
+        
+        while(iter1.hasNext() && iter2.hasNext()) {
+        	env.createVar(iter1.next(), iter2.next());
+        }
+        return body.evaluate(env);
     }
 }
