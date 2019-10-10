@@ -55,6 +55,10 @@ public class Environment {
     		if(this.outerEnv != null) {
     			this.outerEnv.updateVar(key, v);
     		}
+    		else {
+    			//is global
+    			this.createVar(key, v);
+    		}
     	}
     }
 
@@ -64,7 +68,7 @@ public class Environment {
      * a RuntimeException is thrown.
      */
     public void createVar(String key, Value v) {
-        if(this.env.get(key) != null) {
+        if(this.env.get(key) == null) {
         	this.env.put(key, v);
         }
         else {
