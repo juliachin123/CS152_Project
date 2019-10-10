@@ -148,8 +148,14 @@ class WhileExpr implements Expression {
         this.body = body;
     }
     public Value evaluate(Environment env) {
-        // YOUR CODE HERE
-        return null;
+    	Value tmp = cond.evaluate(env);
+        if(tmp instanceof BoolVal) {
+        	if(((BoolVal)tmp).toBoolean()) {
+        		body.evaluate(env);
+        		return evaluate(env);
+        	}
+        }
+        return new NullVal();
     }
 }
 
@@ -181,7 +187,13 @@ class VarDeclExpr implements Expression {
     }
     public Value evaluate(Environment env) {
         // YOUR CODE HERE
-        return null;
+    	Value tmp = exp.evaluate(env);
+    	try {
+    		env.createVar(this.varName, tmp);
+    	}catch(RuntimeException e) {
+    	}finally {
+    		return env.resolveVar(varName);
+    	}
     }
 }
 
@@ -198,8 +210,8 @@ class AssignExpr implements Expression {
         this.e = e;
     }
     public Value evaluate(Environment env) {
-        // YOUR CODE HERE
-        return null;
+        env.updateVar(varName, e.evaluate(env));
+        return e.evaluate(env);
     }
 }
 
