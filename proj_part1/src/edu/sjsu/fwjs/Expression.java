@@ -72,7 +72,41 @@ class BinOpExpr implements Expression {
 
     @SuppressWarnings("incomplete-switch")
     public Value evaluate(Environment env) {
-        // YOUR CODE HERE
+        // ADD, SUBTRACT, MULTIPLY, DIVIDE, MOD, GT, GE, LT, LE, EQ
+    	Value tmp1 = e1.evaluate(env);
+    	Value tmp2 = e2.evaluate(env);
+    	if(tmp1 instanceof IntVal && tmp2 instanceof IntVal) {
+    		if(op == Op.ADD) {
+    			return new IntVal(((IntVal) tmp1).toInt() + ((IntVal) tmp2).toInt());
+    		}
+    		if(op == Op.SUBTRACT) {
+    			return new IntVal(((IntVal) tmp1).toInt() - ((IntVal) tmp2).toInt());
+    		}
+			if(op == Op.DIVIDE) {
+				return new IntVal(((IntVal) tmp1).toInt() / ((IntVal) tmp2).toInt());		
+			}
+			if(op == Op.MULTIPLY) {
+				return new IntVal(((IntVal) tmp1).toInt() * ((IntVal) tmp2).toInt());
+			}
+			if(op == Op.MOD) {
+				return new IntVal(((IntVal) tmp1).toInt() % ((IntVal) tmp2).toInt());
+			}
+			if(op == Op.GT) {
+    			return new BoolVal(((IntVal)tmp1).toInt() > ((IntVal)tmp2).toInt());
+    		}
+			if(op == Op.GE) {
+    			return new BoolVal(((IntVal)tmp1).toInt() >= ((IntVal)tmp2).toInt());
+    		}
+			if(op == Op.LT) {
+    			return new BoolVal(((IntVal)tmp1).toInt() < ((IntVal)tmp2).toInt());
+    		}
+			if(op == Op.LE) {
+    			return new BoolVal(((IntVal)tmp1).toInt() <= ((IntVal)tmp2).toInt());
+    		}
+			if(op == Op.EQ) {
+    			return new BoolVal(((IntVal)tmp1).toInt() == ((IntVal)tmp2).toInt());
+    		}
+    	}
         return null;
     }
 }
