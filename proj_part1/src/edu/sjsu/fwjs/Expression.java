@@ -193,9 +193,9 @@ class VarDeclExpr implements Expression {
     	try {
     		env.createVar(this.varName, tmp);
     	}catch(RuntimeException e) {
-    	}finally {
-    		return env.resolveVar(varName);
+    		return (Value)(new Exception());
     	}
+    	return env.resolveVar(varName);  	
     }
 }
 
@@ -228,7 +228,6 @@ class FunctionDeclExpr implements Expression {
         this.body = body;
     }
     public Value evaluate(Environment env) {
-        // YOUR CODE HERE
         return new ClosureVal(params, body, env);
     }
 }
