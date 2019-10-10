@@ -1,6 +1,7 @@
 package edu.sjsu.fwjs;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -171,7 +172,8 @@ class SeqExpr implements Expression {
     }
     public Value evaluate(Environment env) {
         // YOUR CODE HERE
-        return null;
+    	e1.evaluate(env);
+    	return e2.evaluate(env);
     }
 }
 
@@ -227,7 +229,7 @@ class FunctionDeclExpr implements Expression {
     }
     public Value evaluate(Environment env) {
         // YOUR CODE HERE
-        return null;
+        return new ClosureVal(params, body, env);
     }
 }
 
@@ -243,7 +245,18 @@ class FunctionAppExpr implements Expression {
     }
     public Value evaluate(Environment env) {
         // YOUR CODE HERE
-        return null;
+    	Value tmp = f.evaluate(env);
+    	List<Value> argVals = new ArrayList<Value>();
+    	if(tmp instanceof ClosureVal) {
+    		Iterator<Expression> i = args.iterator();
+    		while(i.hasNext()) {
+    			argVals.add(i.next().evaluate(env));
+    		}
+    		return ((ClosureVal) tmp).apply(argVals);
+    	}
+    	else {
+    		return null;
+    	}
     }
 }
 
