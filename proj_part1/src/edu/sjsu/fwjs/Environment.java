@@ -36,7 +36,7 @@ public class Environment {
     			return this.outerEnv.resolveVar(varName);
     		}
     		else {
-    			return null;
+    			return new NullVal();
     		}
     	}
     }
