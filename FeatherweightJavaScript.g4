@@ -49,18 +49,18 @@ stat: expr SEPARATOR                                    # bareExpr
     | IF '(' expr ')' block ELSE block                  # ifThenElse
     | IF '(' expr ')' block                             # ifThen
     | WHILE '(' expr ')' block 							# while
-    | PRINT '(' expr ')' SEPARATOR         				# print
+    | PRINT '(' expr ')' SEPARATOR       				# print
     | SEPARATOR 										# empty
     ;
 
-expr: expr op=( '*' | '/' | '%' ) expr                  # MulDivMod
-	| expr op=( '+' | '-' ) expr 					    # AddSub
-	| expr op=( '<' | '<=' | '>' | '>=' | '==' ) expr   # Comparator
-	| FUNCTION expr block 								# FunctionDeclaration
-	| IDENTIFIER expr 			                        # FunctionApplication
-	| VAR IDENTIFIER '=' expr							# VariableDeclaration
+expr: expr op=( MUL | DIV | MOD ) expr                  # MulDivMod
+	| expr op=( ADD | SUB ) expr 					    # AddSub
+	| expr op=( LT | LEQ | GT | GEQ | EQ ) expr         # Comparator
+	| FUNCTION params block 							# FunctionDeclaration
+    | expr args                                         #FunctionApplication
+	| VAR IDENTIFIER ASSIGN expr						# VariableDeclaration
 	| IDENTIFIER                                        # Identifier
-	| IDENTIFIER '=' expr                               # AssignmentStatement
+	| IDENTIFIER ASSIGN expr                            # AssignmentStatement
 	| BOOL												# bool
 	| NULL                                              # null
     | INT                                               # int
@@ -71,3 +71,5 @@ block: '{' stat* '}'                                    # fullBlock
      | stat                                             # simpBlock
      ;
 
+params: '(' (ID (',' ID)* )? ')' ;
+args: '(' (expr (',' expr)* )? ')' ;
