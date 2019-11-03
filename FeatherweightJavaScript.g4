@@ -28,6 +28,7 @@ GEQ  	  : '>=' ;
 LEQ  	  : '<=' ;
 EQ  	  : '==' ;
 SEPARATOR : ';' ;
+ASSIGN    : '=' ;
 
 //  identifier
 IDENTIFIER: [a-zA-Z_][a-zA-Z0-9_]* ;
@@ -47,9 +48,21 @@ prog: stat+ ;
 stat: expr SEPARATOR                                    # bareExpr
     | IF '(' expr ')' block ELSE block                  # ifThenElse
     | IF '(' expr ')' block                             # ifThen
+    | WHILE '(' expr ')' block 							# while
+    | PRINT '(' expr ')' SEPARATOR         				# print
+    | SEPARATOR 										# empty
     ;
 
 expr: expr op=( '*' | '/' | '%' ) expr                  # MulDivMod
+	| expr op=( '+' | '-' ) expr 					    # AddSub
+	| expr op=( '<' | '<=' | '>' | '>=' | '==' ) expr   # Comparator
+	| FUNCTION expr block 								# FunctionDeclaration
+	| IDENTIFIER expr 			                        # FunctionApplication
+	| VAR IDENTIFIER '=' expr							# VariableDeclaration
+	| IDENTIFIER                                        # Identifier
+	| IDENTIFIER '=' expr                               # AssignmentStatement
+	| BOOL												# bool
+	| NULL                                              # null
     | INT                                               # int
     | '(' expr ')'                                      # parens
     ;
