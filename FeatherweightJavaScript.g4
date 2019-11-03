@@ -71,5 +71,5 @@ block: '{' stat* '}'                                    # fullBlock
      | stat                                             # simpBlock
      ;
 
-params: '(' (ID (',' ID)* )? ')' ;
+params: '(' (IDENTIFIER (',' IDENTIFIER)* )? ')' ;
 args: '(' (expr (',' expr)* )? ')' ;
