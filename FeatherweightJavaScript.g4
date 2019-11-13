@@ -36,7 +36,7 @@ IDENTIFIER: [a-zA-Z_][a-zA-Z0-9_]* ;
 // Whitespace and comments
 NEWLINE   : '\r'? '\n' -> skip ;
 LINE_COMMENT  : '//' ~[\n\r]* -> skip ;
-BLOCK_COMMENT : '/*' [A-Za-z0-9 &]* '*/' -> skip ;
+BLOCK_COMMENT : '/*' .*? '*/' -> skip ;
 WS            : [ \t]+ -> skip ; // ignore whitespace
 
 
