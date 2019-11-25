@@ -39,7 +39,8 @@ test:
 	java -cp ${BUILD_DIR}:${TEST_CLASSPATH} org.junit.runner.JUnitCore ${PACKAGE_NAME}.ExpressionTest
 
 run:
-	java -cp ${BUILD_DIR} ${PACKAGE_NAME}.Interpreter
+	$(foreach script, ${SCRIPTS}, echo "Running ${FWJS_SCRIPT_DIR}/${script}"; \
+		java -cp ${BUILD_DIR}:${ANTLR_JAR} ${PACKAGE_NAME}.Interpreter ${FWJS_SCRIPT_DIR}/${script};)
 
 ${ZIP_FILE}:
 	zip ${ZIP_FILE} src/${SRC_FOLDERS}/*.java ${GRAMMAR}
@@ -51,5 +52,4 @@ spotless: clean
 	-rm ${ZIP_FILE}
 	-rm -r ${GEN_SRC_BASE_DIR}
 	-rm -r ${TREES_DIR}
-
 

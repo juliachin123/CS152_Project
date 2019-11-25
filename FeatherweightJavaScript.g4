@@ -6,27 +6,27 @@ grammar FeatherweightJavaScript;
 // Reserved words
 IF        : 'if' ;
 ELSE      : 'else' ;
-WHILE	  : 'while' ;
+WHILE     : 'while' ;
 FUNCTION  : 'function' ;
-VAR		  : 'var' ;
-PRINT	  : 'print' ;
+VAR       : 'var' ;
+PRINT     : 'print' ;
 
 // Literals
 INT       : [1-9][0-9]* | '0' ;
-BOOL	  : 'true' | 'false' ;
-NULL	  : 'null' ;
+BOOL      : 'true' | 'false' ;
+NULL      : 'null' ;
 
 // Symbols
 MUL       : '*' ;
 DIV       : '/' ;
-ADD	 	  : '+' ;
-SUB	 	  : '-' ;
-MOD  	  : '%' ;
-GT  	  : '>' ;
-LT  	  : '<' ;
-GEQ  	  : '>=' ;
-LEQ  	  : '<=' ;
-EQ  	  : '==' ;
+ADD       : '+' ;
+SUB       : '-' ;
+MOD       : '%' ;
+GT        : '>' ;
+LT        : '<' ;
+GEQ       : '>=' ;
+LEQ       : '<=' ;
+EQ        : '==' ;
 SEPARATOR : ';' ;
 ASSIGN    : '=' ;
 
@@ -36,7 +36,7 @@ IDENTIFIER: [a-zA-Z_][a-zA-Z0-9_]* ;
 // Whitespace and comments
 NEWLINE   : '\r'? '\n' -> skip ;
 LINE_COMMENT  : '//' ~[\n\r]* -> skip ;
-BLOCK_COMMENT : '/*'.*'*/' -> skip ;
+BLOCK_COMMENT : '/*' .*? '*/' -> skip ;
 WS            : [ \t]+ -> skip ; // ignore whitespace
 
 
@@ -48,21 +48,21 @@ prog: stat+ ;
 stat: expr SEPARATOR                                    # bareExpr
     | IF '(' expr ')' block ELSE block                  # ifThenElse
     | IF '(' expr ')' block                             # ifThen
-    | WHILE '(' expr ')' block 							# while
-    | PRINT '(' expr ')' SEPARATOR       				# print
-    | SEPARATOR 										# empty
+    | WHILE '(' expr ')' block                          # while
+    | PRINT '(' expr ')' SEPARATOR                      # print
+    | SEPARATOR                                         # empty
     ;
 
 expr: expr op=( MUL | DIV | MOD ) expr                  # MulDivMod
-	| expr op=( ADD | SUB ) expr 					    # AddSub
-	| expr op=( LT | LEQ | GT | GEQ | EQ ) expr         # Comparator
-	| FUNCTION params block 							# FunctionDeclaration
-    | expr args                                         #FunctionApplication
-	| VAR IDENTIFIER ASSIGN expr						# VariableDeclaration
-	| IDENTIFIER                                        # Identifier
-	| IDENTIFIER ASSIGN expr                            # AssignmentStatement
-	| BOOL												# bool
-	| NULL                                              # null
+    | expr op=( ADD | SUB ) expr                        # AddSub
+    | expr op=( LT | LEQ | GT | GEQ | EQ ) expr         # Comparator
+    | FUNCTION params block                             # FunctionDeclaration
+    | expr args                                         # FunctionApplication
+    | VAR IDENTIFIER ASSIGN expr                        # VariableDeclaration
+    | IDENTIFIER                                        # Identifier
+    | IDENTIFIER ASSIGN expr                            # AssignmentStatement
+    | BOOL                                              # bool
+    | NULL                                              # null
     | INT                                               # int
     | '(' expr ')'                                      # parens
     ;
